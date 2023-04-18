@@ -10,3 +10,11 @@ export const getUsers = async () => {
     console.log(error);
   }
 };
+
+export const updateUser = async (data) => {
+  try {
+    await axios.put(`/users/${data.id}`, data);
+  } catch (error) {
+    console.log(error);
+  }
+};
