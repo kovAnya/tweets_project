@@ -1,6 +1,6 @@
 {
-  "homepage": "https://kovanya.github.io/tweets_project/",
-  "name": "tweets_project",
+  "homepage": "https://kovanya.github.io/tweets/",
+  "name": "tweets",
   "private": true,
   "version": "0.0.0",
   "type": "module",
