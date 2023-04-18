@@ -1,22 +1,26 @@
 import css from "./UserItem.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { updateUser } from "../../services/fetchApi";
+import { addToStorage, deleteFromStorage } from "../../services/localStorage";
 
-export const UserItem = ({ userData }) => {
-  const [followed, setFollowed] = useState(false);
-
-  const followHandler = () => {
+export const UserItem = ({ userData, onClick, followed }) => {
+  const followHandler = async () => {
     const incFlwNum = userData.followers + 1;
-    updateUser({ ...userData, followers: incFlwNum });
-    setFollowed(true);
+    await updateUser({ ...userData, followers: incFlwNum });
+    addToStorage(userData.id);
+    onClick();
   };
 
-  const unFollowHandler = () => {
+  const unFollowHandler = async () => {
     const decFlwNum = userData.followers - 1;
-    updateUser({ ...userData, followers: decFlwNum });
-    setFollowed(false);
+    await updateUser({ ...userData, followers: decFlwNum });
+    deleteFromStorage(userData.id);
+    onClick();
   };
 
+  const formattedFlw = new Intl.NumberFormat("en-US").format(
+    userData.followers
+  );
   return (
     <li className={css.card}>
       <div className={css.avatar_thmb}>
@@ -33,10 +37,10 @@ export const UserItem = ({ userData }) => {
           <span>{userData.tweets}</span> tweets
         </li>
         <li className={css.card_info}>
-          <span>{userData.followers}</span> followers
+          <span>{formattedFlw}</span> followers
         </li>
       </ul>
-      {followed ? (
+      {followed.includes(userData.id) ? (
         <button
           className={`${css.card_btn} ${css.followed}`}
           onClick={unFollowHandler}
