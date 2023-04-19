@@ -13,7 +13,7 @@ function App() {
         <Route path="tweets" element={<Tweets />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/tweets" replace />} />
     </Routes>
   );
 }
